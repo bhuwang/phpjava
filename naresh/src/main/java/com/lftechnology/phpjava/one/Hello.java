@@ -1,7 +1,11 @@
 package com.lftechnology.phpjava.one;
+
 import com.lftechnology.phpjava.two.Printer;
+
 /**
- * Created by naresh on 5/4/16.
+ * Sample Hello World application
+ *
+ * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
  */
 public class Hello {
     public static void main(String args[]) {

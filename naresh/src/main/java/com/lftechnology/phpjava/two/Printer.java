@@ -1,11 +1,11 @@
 package com.lftechnology.phpjava.two;
 
 /**
- * Created by naresh on 5/4/16.
+ * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
  */
 public class Printer {
 
-    public static void printIt(String str){
+    public static void printIt(String str) {
         System.out.println(str);
     }
 }
