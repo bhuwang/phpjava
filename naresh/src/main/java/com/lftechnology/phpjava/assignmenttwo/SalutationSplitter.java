@@ -8,14 +8,20 @@ public class SalutationSplitter {
     public static String salutaion = "";
 
     public static void main(String[] args) {
-        for (int i = 0; i < args.length; i++) {
-            if (i == 0) {
-                name = args[0];
-            } else {
-                salutaion = salutaion + " " + args[i];
+        if (args.length > 0) {
+            for (int i = 0; i < args.length; i++) {
+                if (i == 0) {
+                    salutaion = args[0];
+                } else {
+                    name = name + " " + args[i];
+                }
             }
+            if (name.length() > 0 || salutaion.length() > 0) {
+                System.out.print("Salutaion: " + salutaion);
+                System.out.println("\tYour Name: " + name);
+            }
+        } else {
+            System.out.println("Please provide salutaion and name.");
         }
-        System.out.println(name);
-        System.out.println(salutaion);
     }
 }
