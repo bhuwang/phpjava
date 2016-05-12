@@ -1,4 +1,4 @@
-package com.lftechnology.phpjava.assignmentTwo;
+package com.lftechnology.phpjava.assignmenttwo;
 
 /**
  * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
