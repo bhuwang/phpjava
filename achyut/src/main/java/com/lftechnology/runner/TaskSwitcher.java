@@ -10,7 +10,6 @@ public class TaskSwitcher {
 
     public TaskSwitcher(int option) {
         this.chosenOption = option;
-
     }
 
     public void switchAndRun() {
@@ -38,7 +37,6 @@ public class TaskSwitcher {
             menu.showmenu();
         }
         System.out.println("Program Completed.");
-        
         menu.showmenu();
     }
 }
