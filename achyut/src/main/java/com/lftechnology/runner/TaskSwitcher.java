@@ -1,8 +1,8 @@
 package com.lftechnology.runner;
 
-import com.lftechnology.com.programs.MultiplierProgram;
-import com.lftechnology.com.programs.PalindromeProgram;
-import com.lftechnology.com.programs.SalutationProgram;
+import com.lftechnology.programs.MultiplierProgram;
+import com.lftechnology.programs.PalindromeProgram;
+import com.lftechnology.programs.SalutationProgram;
 
 public class TaskSwitcher {
 

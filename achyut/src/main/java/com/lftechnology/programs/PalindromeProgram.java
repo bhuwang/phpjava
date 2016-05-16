@@ -1,4 +1,4 @@
-package com.lftechnology.com.programs;
+package com.lftechnology.programs;
 
 import java.util.Scanner;
 
