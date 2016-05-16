@@ -16,7 +16,7 @@ public class SalutationProgram {
         this.initiateRun();
         this.askForInput();
         if (this.fullNameWithSalutation.length() <= 0) {
-            System.out.println("Input can't be empty! Enter again");
+            System.out.println("->Input can't be empty! Enter again");
             this.askForInput();
         }
         this.splitInput();
@@ -27,8 +27,8 @@ public class SalutationProgram {
 
     public void initiateRun() {
         System.out.println("\n");
-        System.out.println("Executing Salutation");
-        System.out.println("Please Enter Your Full Name with Salutation (e.g, Mr. John Doe)\n\n");
+        System.out.println("->Executing Salutation");
+        System.out.println("->Please Enter Your Full Name with Salutation (e.g, Mr. John Doe)\n\n");
     }
 
     public void endRun() {

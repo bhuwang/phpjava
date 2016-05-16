@@ -28,15 +28,14 @@ public class TaskSwitcher {
             palindromeProgram.run();
             break;
         case 0:
-            System.out.println("You are exiting the program now...");
-            System.out.println("Exited");
+            System.out.println("->You are exiting the program now...");
+            System.out.println("->Exited");
             System.exit(0);
         default:
-            System.out.println("Invalid Input");
+            System.out.println("->Invalid Input");
             System.out.println("\n");
             menu.showmenu();
-        }
-        System.out.println("Program Completed.");
+        }        
         menu.showmenu();
     }
 }

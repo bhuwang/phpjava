@@ -15,17 +15,16 @@ public class MultiplierProgram {
 
     public void run() {
         this.initiateRun();
-        System.out.println("Please Enter the Number of Multiplier");
+        System.out.println("->Please Enter the Number of Multiplier");
         scanner = new Scanner(System.in);
         this.numberOfMultiple = scanner.nextInt();
-        System.out.println("Please Enter First Multiplier");
+        System.out.println("->Please Enter First Multiplier");
         this.firstMultiplier = scanner.nextInt();
-        System.out.println("Please Enter Second Multiplier");
+        System.out.println("->Please Enter Second Multiplier");
         this.secondMultiplier = scanner.nextInt();
         int sum = calculateMultiplier();
         System.out.println("Sum of multiple by " + this.firstMultiplier + " and " + this.secondMultiplier + " below "
-                + this.numberOfMultiple + "=" + sum);
-        System.out.println("Executing Multiplier");
+                + this.numberOfMultiple + "=" + sum);        
         this.endRun();
     }
 
@@ -42,7 +41,7 @@ public class MultiplierProgram {
 
     public void initiateRun() {
         System.out.println("\n");
-        System.out.println("Executing Multiplier");
+        System.out.println("->Executing Multiplier");
 
     }
 

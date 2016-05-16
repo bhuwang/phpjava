@@ -13,7 +13,7 @@ public class PalindromeProgram {
 
     public void run() {
         this.initiateRun();
-        System.out.println("Please Enter the Number of Multiplier");
+        System.out.println("->Please Enter the Number of Multiplier");
         scanner = new Scanner(System.in);
         this.number = scanner.nextLine();
         Boolean isPalindrome = this.isPalindrome();
@@ -40,7 +40,7 @@ public class PalindromeProgram {
 
     public void initiateRun() {
         System.out.println("\n");
-        System.out.println("Executing Palindrome Program");
+        System.out.println("->Executing Palindrome Program");
 
     }
 
