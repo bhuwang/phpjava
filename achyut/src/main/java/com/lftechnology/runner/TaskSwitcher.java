@@ -14,7 +14,7 @@ public class TaskSwitcher {
     }
 
     public void switchAndRun() {
-
+        Menu menu = new Menu();
         switch (this.chosenOption) {
         case 1:
             SalutationProgram salutationProgram = new SalutationProgram();
@@ -33,10 +33,12 @@ public class TaskSwitcher {
             System.out.println("Exited");
             System.exit(0);
         default:
-            System.out.println("Invalid grade");
+            System.out.println("Invalid Input");
+            System.out.println("\n");
+            menu.showmenu();
         }
         System.out.println("Program Completed.");
-        Menu menu = new Menu();
+        
         menu.showmenu();
     }
 }
