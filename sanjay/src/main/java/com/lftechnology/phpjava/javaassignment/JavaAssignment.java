@@ -64,6 +64,7 @@ public class JavaAssignment {
         System.out.println("* Press 1 for name splitter");
         System.out.println("* Press 2 for name Multiplier");
         System.out.println("* Press 3 for name Fibnaci");
+        System.out.println("* Press 4 for name Palindrome");
         System.out.println("* Press 0 for exit");
         System.out.println("***************************");
     }
@@ -101,6 +102,8 @@ public class JavaAssignment {
             }
 
             break;
+        case 4:
+            System.out.println("Case not handled.");
         case 0:
             System.out.println("Thank you!! ");
             System.exit(0);
