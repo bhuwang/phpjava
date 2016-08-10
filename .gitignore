@@ -1,7 +1,7 @@
 *.class
 
 # IntelliJ IDEA coniguration folder
-.idea/*
+*/.idea/*
 
 # module file created by IntelliJ IDEA
 *.iml
