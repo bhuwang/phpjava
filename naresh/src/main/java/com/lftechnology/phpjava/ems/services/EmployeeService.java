@@ -39,7 +39,8 @@ public class EmployeeService {
             UserDaoImpl userDao = new UserDaoImpl();
             EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
             try {
-                userDao.insert(employee);
+                int userId = userDao.insert(employee);
+                employee.setUserId(userId);
                 employeeDao.insert(employee);
             } catch (SQLException e) {
                 e.printStackTrace();

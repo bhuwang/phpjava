@@ -52,7 +52,7 @@ public class UserDaoImpl implements DaoSignature<User> {
     /**
      * Find the employee by role
      *
-     * @param User user
+     * @param
      * @return User
      * @throws SQLException
      * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
@@ -65,7 +65,10 @@ public class UserDaoImpl implements DaoSignature<User> {
 
         User result = findBy(sql, bindValues);
         try {
-            if (!PasswordHashGenerator.check(user.getPassword(), result.getPassword())) {
+            if(result.getPassword() == null){
+                result = new User();
+            }
+            else if (!PasswordHashGenerator.check(user.getPassword(), result.getPassword())) {
                 result = new User();
             }
         } catch (Exception e) {

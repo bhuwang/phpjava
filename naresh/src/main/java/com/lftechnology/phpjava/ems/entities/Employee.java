@@ -14,17 +14,20 @@ public class Employee extends User {
     protected String address;
     protected String department;
     protected Role role;
+    protected int userId;
 
     public Employee(){
         super();
     }
 
-    public Employee(String fullname, String address, String department, Role role) {
+
+    public Employee(String fullname, String address, String department, Role role, int userId) {
         super();
         this.fullname = fullname;
         this.address = address;
         this.department = department;
         this.role = role;
+        this.userId = userId;
     }
 
     public String getFullname() {
@@ -61,6 +64,15 @@ public class Employee extends User {
 
     public Employee setRole(Role role) {
         this.role = role;
+        return this;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public Employee setUserId(int userId) {
+        this.userId = userId;
         return this;
     }
 }

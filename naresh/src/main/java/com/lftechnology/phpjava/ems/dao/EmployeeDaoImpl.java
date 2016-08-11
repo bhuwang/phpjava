@@ -28,12 +28,13 @@ public class EmployeeDaoImpl implements DaoSignature <Employee>{
 
     @Override
     public int insert(Employee employee) throws SQLException {
-        String sql = "INSERT INTO employee (fullname, address, department, role) VALUES ( ?, ? , ?, ?);";
+        String sql = "INSERT INTO employee (fullname, address, department, role, user_id) VALUES ( ?, ? , ?, ?,?);";
         stmt = conn.prepareStatement(sql);
         stmt.setString(1, employee.getFullname());
         stmt.setString(2, employee.getAddress());
         stmt.setString(3, employee.getDepartment());
         stmt.setString(4, employee.getRole().toString());
+        stmt.setInt(5, employee.getUserId());
         return stmt.executeUpdate();
     }
 

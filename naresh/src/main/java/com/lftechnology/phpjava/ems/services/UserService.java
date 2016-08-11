@@ -14,6 +14,7 @@ import java.sql.SQLException;
 public class UserService {
 
     private boolean isLoggedIn = false;
+    private String loggedInUserRole = "";
 
     UserDaoImpl userDao = new UserDaoImpl();
 
@@ -22,7 +23,8 @@ public class UserService {
         try {
             User result = userDao.findByUsernamePassword(user);
             if (user.getUsername().equals(result.getUsername())) {
-                isLoggedIn = true;
+                this.isLoggedIn = true;
+//                this.loggedInUserRole = user
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,6 +33,10 @@ public class UserService {
 
     public boolean isUserLoggedIn() {
         return isLoggedIn;
+    }
+
+    public String getLoggedInUserRole() {
+        return this.loggedInUserRole;
     }
 
     public void logout() {

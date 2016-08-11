@@ -13,6 +13,7 @@ import com.lftechnology.phpjava.ems.services.UserService;
  */
 public class Router {
 
+    private static UserService userService = new UserService();
 
     static {
         onRouteBootstrap();
@@ -34,6 +35,11 @@ public class Router {
         employeeService.checkAndCreateAdminUser();
     }
 
+    /**
+     * Show Welcome Screen
+     *
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     private static void showWelcomeScreen() {
 
         ConsoleWriter.writeBlankLine(3);
@@ -43,12 +49,35 @@ public class Router {
         ConsoleWriter.writeUserInputRequestMessage("Enter your credentails to log into the system");
     }
 
-    private static void showMenu() {
-        UserService userService = new UserService();
+    private static void showLoginMenuAndLoginToSystem() {
         if (!userService.isUserLoggedIn()) {
             showWelcomeScreen();
             LoginController.login();
         }
+    }
+
+    private static void showMenu() {
+        showLoginMenuAndLoginToSystem();
+//        if(userService.isUserLoggedIn() && userService.){
+//
+//        }
+
+    }
+
+    private static void showAdminMenu() {
+        ConsoleWriter.writeBlankLine(3);
+        ConsoleWriter.writeUserInputRequestMessage("1. Add New User");
+        ConsoleWriter.writeBlankLine(3);
+        ConsoleWriter.writeUserInputRequestMessage("2. Delete User");
+        ConsoleWriter.writeBlankLine(3);
+        ConsoleWriter.writeUserInputRequestMessage("3. Search User(s)");
+    }
+
+    private static void showNormalUserMenu() {
+        ConsoleWriter.writeBlankLine(3);
+        ConsoleWriter.writeUserInputRequestMessage("1. Update Profile");
+        ConsoleWriter.writeBlankLine(3);
+        ConsoleWriter.writeUserInputRequestMessage("2. Search User(s)");
     }
 
     public static void main(String[] args) {
