@@ -1,8 +1,12 @@
 package com.lftechnology.phpjava.ems.utlis;
 
 import com.lftechnology.phpjava.ems.controllers.LoginController;
+import com.lftechnology.phpjava.ems.dao.UserDaoImpl;
+import com.lftechnology.phpjava.ems.entities.User;
 import com.lftechnology.phpjava.ems.services.EmployeeService;
 import com.lftechnology.phpjava.ems.services.UserService;
+
+import java.sql.SQLException;
 
 
 /**
@@ -81,6 +85,20 @@ public class Router {
     }
 
     public static void main(String[] args) {
+        UserDaoImpl userDao = new UserDaoImpl();
+        User user = new User();
+        user.setUsername("naresh" + Math.random());
+        try {
+            user.setPassword(PasswordHashGenerator.getSaltedHash("maharjan"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            int result = userDao.insert(user);
+            System.out.println(result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         showMenu();
     }
 }

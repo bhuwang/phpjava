@@ -6,10 +6,7 @@ import com.lftechnology.phpjava.ems.enums.Role;
 import com.lftechnology.phpjava.ems.utlis.DbFactory;
 import com.lftechnology.phpjava.ems.utlis.PasswordHashGenerator;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.Map;
 
@@ -31,11 +28,18 @@ public class UserDaoImpl implements DaoSignature<User> {
 
     @Override
     public int insert(User user) throws SQLException {
+        int lastInsertedId = 0;
         String sql = "INSERT INTO user (username, password, is_terminated) VALUES ( ?, ? , 0);";
-        stmt = conn.prepareStatement(sql);
+        stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, user.getUsername());
         stmt.setString(2, user.getPassword());
-        return stmt.executeUpdate();
+        stmt.executeUpdate();
+        ResultSet rs = stmt.getGeneratedKeys();
+        if(rs.next())
+        {
+            lastInsertedId = rs.getInt(1);
+        }
+        return lastInsertedId;
     }
 
     @Override

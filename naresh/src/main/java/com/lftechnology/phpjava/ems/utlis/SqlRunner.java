@@ -66,6 +66,7 @@ public class SqlRunner {
     private List<String> getExecutedFileList() {
         List<String> executedFiles = new ArrayList<>();
         try {
+            this.checkAndCreateExecutedListFile();
             try (BufferedReader br = new BufferedReader(new FileReader(basePath + "executedFiles.txt"))) {
                 String line = br.readLine();
                 while (line != null) {
@@ -103,6 +104,16 @@ public class SqlRunner {
         } finally {
             DbFactory.closeConnection();
         }
+    }
 
+    private void checkAndCreateExecutedListFile() {
+        File f = new File(basePath + "executedFiles.txt");
+        try {
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

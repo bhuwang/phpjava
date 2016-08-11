@@ -24,7 +24,7 @@ public class UserService {
             User result = userDao.findByUsernamePassword(user);
             if (user.getUsername().equals(result.getUsername())) {
                 this.isLoggedIn = true;
-//                this.loggedInUserRole = user
+//                this.loggedInUserRole = user.get
             }
         } catch (SQLException e) {
             e.printStackTrace();
