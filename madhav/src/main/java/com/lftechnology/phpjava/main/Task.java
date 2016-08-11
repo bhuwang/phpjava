@@ -1,5 +1,6 @@
 package main.java.com.lftechnology.phpjava.main;
 
+import main.java.com.lftechnology.phpjava.arrays.DayOfWeek;
 import main.java.com.lftechnology.phpjava.numbers.AddMultiples;
 import main.java.com.lftechnology.phpjava.numbers.Fibonacci;
 import main.java.com.lftechnology.phpjava.strings.NameSplitter;
@@ -18,6 +19,10 @@ public class Task {
         case 3:
             Fibonacci f = new Fibonacci();
             f.getFibonacciSum();
+            break;
+        case 4:
+            DayOfWeek d = new DayOfWeek();
+            d.findDayOfWeek();
             break;
         case 0:
         default:
