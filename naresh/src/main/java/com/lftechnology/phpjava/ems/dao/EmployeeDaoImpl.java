@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,14 +17,29 @@ import java.util.List;
  * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
  * @since August, 08 2016
  */
-public class EmployeeDaoImpl implements DaoSignature <Employee>{
+public class EmployeeDaoImpl implements DaoSignature<Employee> {
 
     protected Connection conn = DbFactory.getConnection();
     protected PreparedStatement stmt = null;
 
     @Override
     public List<Employee> findAll() throws SQLException {
-        return null;
+        List<Employee> employees = new ArrayList<>();
+        String sql = "SELECT * FROM employee e INNER JOIN user u ON e.user_id = u.id WHERE u.is_terminated = 0";
+        stmt = conn.prepareStatement(sql);
+        ResultSet result = stmt.executeQuery();
+        if (result.next()) {
+            Employee employee = new Employee();
+            employee.setFullname(result.getString("fullname"));
+            employee.setAddress(result.getString("address"));
+            employee.setDepartment(result.getString("department"));
+            employee.setRole(result.getString("role").equals(Role.ADMIN.toString()) ? Role.ADMIN : Role.USER);
+            employee.setUserId(result.getInt("user_id"));
+            employee.setUsername(result.getString("username"));
+            employees.add(employee);
+            System.out.println(employee.toString());
+        }
+        return employees;
     }
 
     @Override
@@ -40,43 +56,71 @@ public class EmployeeDaoImpl implements DaoSignature <Employee>{
 
     @Override
     public int update(Employee employee) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE employee SET");
+        boolean update = false;
+        String value = "";
+        if (employee.getFullname() != null && !employee.getFullname().isEmpty()) {
+            update = true;
+            value = employee.getFullname();
+            sql.append(" fullname = ?");
+        } else if (employee.getAddress() != null && !employee.getAddress().isEmpty()) {
+            update = true;
+            value = employee.getAddress();
+            sql.append(" address = ?");
+        } else if (employee.getDepartment() != null && !employee.getDepartment().isEmpty()) {
+            update = true;
+            value = employee.getDepartment();
+            sql.append(" department = ?");
+        }
+        if (update) {
+            sql.append(" WHERE user_id = ? ");
+            stmt = conn.prepareStatement(sql.toString());
+            stmt.setString(1, value);
+            stmt.setInt(2, employee.getUserId());
+            return stmt.executeUpdate();
+        }
         return 0;
     }
 
     @Override
-    public boolean delete(Employee employee) throws SQLException {
-        return false;
+    public int delete(Employee employee) throws SQLException {
+        return 0;
     }
 
 
     /**
      * Find the employee by fullname
      *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param fullName
      * @return Employee
      * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    public Employee findByFullName(String fullName) throws SQLException {
+    public List<Employee> findByFullName(String fullName) throws SQLException {
 
         String sql = "SELECT * FROM employee WHERE fullname = ?";
 
-        return findBy(sql, fullName);
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, fullName);
+        return findBy(stmt);
     }
 
     /**
      * Find the employee by address
      *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param address
      * @return Employee
      * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    public Employee findByAddress(String address) throws SQLException {
+    public List<Employee> findByAddress(String address) throws SQLException {
 
         String sql = "SELECT * FROM employee WHERE address = ?";
 
-        return findBy(sql, address);
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, address);
+        return findBy(stmt);
     }
 
     /**
@@ -87,72 +131,83 @@ public class EmployeeDaoImpl implements DaoSignature <Employee>{
      * @throws SQLException
      */
 
-    public Employee findByDepartment(String department) throws SQLException {
+    public List<Employee> findByDepartment(String department) throws SQLException {
 
         String sql = "SELECT * FROM employee WHERE department = ?";
 
-        return findBy(sql, department);
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, department);
+        return findBy(stmt);
     }
 
     /**
      * Find the employee by role
      *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param
      * @return Employee
      * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
 
-    public Employee findByRole(Role role) throws SQLException {
+    public List<Employee> findByRole(Role role) throws SQLException {
 
         String sql = "SELECT * FROM employee WHERE role = ?";
 
-        return findBy(sql, role.toString());
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, role.toString());
+        return findBy(stmt);
     }
 
+    /**
+     * Find the employee by role
+     *
+     * @param
+     * @return Employee
+     * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
+
+    public List<Employee> findByUserId(int userId) throws SQLException {
+
+        String sql = "SELECT * FROM employee WHERE user_id = ?";
+
+        stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, userId);
+        return findBy(stmt);
+    }
 
 
     /**
-     *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
-     * @param sql
-     * @param bindValue
+     * @param stmt
      * @return Employee
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    private Employee findBy(String sql, String bindValue){
-        Employee employee = new Employee();
-        try {
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, bindValue);
-            ResultSet resultSet = stmt.executeQuery();
-            employee = setEmployeeData(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DbFactory.closeConnection();
-        }
-        return employee;
+    private List<Employee> findBy(PreparedStatement stmt) throws SQLException {
+        ResultSet resultSet = stmt.executeQuery();
+        List<Employee> employees = setEmployeeData(resultSet);
+        return employees;
     }
+
 
     /**
      * set employee data from the resultset
      *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param resultSet
      * @return Employee
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    private Employee setEmployeeData(ResultSet resultSet){
-        Employee employee = new Employee();
-        try {
-            if (resultSet.next()) {
-                employee.setAddress(resultSet.getString("address"));
-                employee.setDepartment(resultSet.getString("department"));
-                employee.setFullname(resultSet.getString("fullname"));
-                employee.setRole((resultSet.getString("role").toLowerCase()).equals(Role.ADMIN.toString()) ? Role.ADMIN :Role.USER);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private List<Employee> setEmployeeData(ResultSet resultSet) throws SQLException {
+        List<Employee> employees = new ArrayList<>();
+        while (resultSet.next()) {
+            Employee employee = new Employee();
+            employee.setAddress(resultSet.getString("address"));
+            employee.setDepartment(resultSet.getString("department"));
+            employee.setFullname(resultSet.getString("fullname"));
+            employee.setRole((resultSet.getString("role")).equals(Role.ADMIN.toString()) ? Role.ADMIN : Role.USER);
+            employee.setUserId(resultSet.getInt("user_id"));
+            employees.add(employee);
         }
-        return employee;
+        return employees;
     }
+
 }

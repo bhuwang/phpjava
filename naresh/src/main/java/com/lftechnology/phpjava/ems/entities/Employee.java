@@ -31,7 +31,7 @@ public class Employee extends User {
     }
 
     public String getFullname() {
-        return fullname;
+        return this.fullname;
     }
 
     public Employee setFullname(String fullname) {
@@ -40,7 +40,7 @@ public class Employee extends User {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public Employee setAddress(String address) {
@@ -49,7 +49,7 @@ public class Employee extends User {
     }
 
     public String getDepartment() {
-        return department;
+        return this.department;
     }
 
     public Employee setDepartment(String department) {
@@ -59,7 +59,7 @@ public class Employee extends User {
 
 
     public Role getRole() {
-        return role;
+        return this.role;
     }
 
     public Employee setRole(Role role) {
@@ -68,11 +68,21 @@ public class Employee extends User {
     }
 
     public int getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public Employee setUserId(int userId) {
         this.userId = userId;
         return this;
+    }
+
+    public String[] toArray(){
+        String[] emp = new String[5];
+        emp[0] = String.valueOf(this.getUserId());
+        emp[1] = this.getFullname();
+        emp[2] = this.getAddress();
+        emp[3] = this.getRole().toString();
+        emp[4] = this.getDepartment();
+        return  emp;
     }
 }

@@ -2,7 +2,6 @@ package com.lftechnology.phpjava.ems.dao;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * DaoSignature
@@ -45,5 +44,5 @@ public interface DaoSignature<T> {
      * @return
      * @throws SQLException
      */
-    boolean delete(T t) throws SQLException;
+    int delete(T t) throws SQLException;
 }

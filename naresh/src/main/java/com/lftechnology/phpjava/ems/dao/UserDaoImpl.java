@@ -1,14 +1,13 @@
 package com.lftechnology.phpjava.ems.dao;
 
-import com.lftechnology.phpjava.ems.entities.Employee;
 import com.lftechnology.phpjava.ems.entities.User;
-import com.lftechnology.phpjava.ems.enums.Role;
 import com.lftechnology.phpjava.ems.utlis.DbFactory;
 import com.lftechnology.phpjava.ems.utlis.PasswordHashGenerator;
 
 import java.sql.*;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * UserDaoImpl
@@ -35,8 +34,7 @@ public class UserDaoImpl implements DaoSignature<User> {
         stmt.setString(2, user.getPassword());
         stmt.executeUpdate();
         ResultSet rs = stmt.getGeneratedKeys();
-        if(rs.next())
-        {
+        if (rs.next()) {
             lastInsertedId = rs.getInt(1);
         }
         return lastInsertedId;
@@ -44,15 +42,59 @@ public class UserDaoImpl implements DaoSignature<User> {
 
     @Override
     public int update(User user) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE user SET ");
+        boolean update = false;
+        String value = "";
+        if (user.getUsername() != null && !user.getUsername().isEmpty()) {
+            update = true;
+            value = user.getUsername();
+            sql.append(" username = ?");
+        } else if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            update = true;
+            value = user.getPassword();
+            sql.append(" password = ?");
+        }
+        if(update){
+            sql.append(" where id = ?");
+            stmt = conn.prepareStatement(sql.toString());
+            stmt.setString(1, value);
+            stmt.setInt(2, user.getId());
+            return stmt.executeUpdate();
+        }
         return 0;
     }
 
     @Override
-    public boolean delete(User user) throws SQLException {
-        return false;
+    public int delete(User user) throws SQLException {
+        return 0;
     }
 
+    public int delete(Set<Integer> userIds) throws SQLException {
+        String sql = "DELETE FROM user WHERE id IN(%s)";
+        String sqlNew = String.format(sql, this.preparePlaceHolders(userIds.size()));
+        stmt = conn.prepareStatement(sqlNew);
+        this.setValues(stmt, userIds.toArray());
+        return stmt.executeUpdate();
+    }
 
+    public int terminateUsers(Set<Integer> userIds) throws SQLException {
+        String sql = "UPDATE user SET is_terminated = 1 WHERE id IN(%s)";
+        String sqlNew = String.format(sql, this.preparePlaceHolders(userIds.size()));
+        stmt = conn.prepareStatement(sqlNew);
+        this.setValues(stmt, userIds.toArray());
+        return stmt.executeUpdate();
+    }
+
+    public static String preparePlaceHolders(int length) {
+        return String.join(",", Collections.nCopies(length, "?"));
+    }
+
+    public static void setValues(PreparedStatement preparedStatement, Object... values) throws SQLException {
+        for (int i = 0; i < values.length; i++) {
+            preparedStatement.setObject(i + 1, values[i]);
+        }
+    }
     /**
      * Find the employee by role
      *
@@ -69,10 +111,9 @@ public class UserDaoImpl implements DaoSignature<User> {
 
         User result = findBy(sql, bindValues);
         try {
-            if(result.getPassword() == null){
+            if (result.getPassword() == null) {
                 result = new User();
-            }
-            else if (!PasswordHashGenerator.check(user.getPassword(), result.getPassword())) {
+            } else if (!PasswordHashGenerator.check(user.getPassword(), result.getPassword())) {
                 result = new User();
             }
         } catch (Exception e) {
@@ -118,9 +159,10 @@ public class UserDaoImpl implements DaoSignature<User> {
         User user = new User();
         try {
             if (resultSet.next()) {
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                user.setTerminated(resultSet.getBoolean("is_terminated"));
+                user.setUsername(resultSet.getString("username"))
+                        .setPassword(resultSet.getString("password"))
+                        .setTerminated(resultSet.getBoolean("is_terminated"))
+                        .setId(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

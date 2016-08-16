@@ -12,6 +12,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.6</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/de.vandermeer/asciitable -->
+        <dependency>
+            <groupId>de.vandermeer</groupId>
+            <artifactId>asciitable</artifactId>
+            <version>0.2.5</version>
+        </dependency>
     </dependencies>
     <artifactId>naresh</artifactId>
 </project>

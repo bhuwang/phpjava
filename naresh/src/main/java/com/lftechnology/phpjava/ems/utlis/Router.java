@@ -1,13 +1,15 @@
 package com.lftechnology.phpjava.ems.utlis;
 
+import com.lftechnology.phpjava.ems.constants.Constant;
+import com.lftechnology.phpjava.ems.controllers.EmployeeController;
 import com.lftechnology.phpjava.ems.controllers.LoginController;
-import com.lftechnology.phpjava.ems.dao.UserDaoImpl;
-import com.lftechnology.phpjava.ems.entities.User;
+import com.lftechnology.phpjava.ems.entities.Employee;
 import com.lftechnology.phpjava.ems.services.EmployeeService;
-import com.lftechnology.phpjava.ems.services.UserService;
+import com.lftechnology.phpjava.ems.views.CommonViewUtility;
 
 import java.sql.SQLException;
-
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * RouterService
@@ -17,10 +19,18 @@ import java.sql.SQLException;
  */
 public class Router {
 
-    private static UserService userService = new UserService();
+    private static LoginController loginController = new LoginController();
+    private static EmployeeController employeeController = new EmployeeController();
+    private static CommonUtility commonUtility = new CommonUtility();
 
     static {
-        onRouteBootstrap();
+        try {
+            onRouteBootstrap();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -30,7 +40,7 @@ public class Router {
      *
      * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    private static void onRouteBootstrap() {
+    public static void onRouteBootstrap() throws Exception {
 
         SqlRunner sqlRunner = new SqlRunner();
         sqlRunner.executeSql();
@@ -44,61 +54,51 @@ public class Router {
      *
      * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    private static void showWelcomeScreen() {
+    public static void showWelcomeScreen() {
 
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Welcome To Employee Management System !!!");
-
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Enter your credentails to log into the system");
+        CommonViewUtility.showWelcomeScreen();
     }
 
-    private static void showLoginMenuAndLoginToSystem() {
-        if (!userService.isUserLoggedIn()) {
+    public static void showLoginMenuAndLoginToSystem() {
+        if (!commonUtility.getUserService().isUserLoggedIn()) {
             showWelcomeScreen();
-            LoginController.login();
+            loginController.login();
+            commonUtility = (CommonUtility) loginController.getData().get("commonUtility");
         }
     }
 
-    private static void showMenu() {
+    public static void showMenu() {
         showLoginMenuAndLoginToSystem();
-//        if(userService.isUserLoggedIn() && userService.){
-//
-//        }
-
-    }
-
-    private static void showAdminMenu() {
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("1. Add New User");
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("2. Delete User");
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("3. Search User(s)");
-    }
-
-    private static void showNormalUserMenu() {
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("1. Update Profile");
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("2. Search User(s)");
-    }
-
-    public static void main(String[] args) {
-        UserDaoImpl userDao = new UserDaoImpl();
-        User user = new User();
-        user.setUsername("naresh" + Math.random());
-        try {
-            user.setPassword(PasswordHashGenerator.getSaltedHash("maharjan"));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!commonUtility.isLoggedIn()) {
+            CommonViewUtility.showMessageAndContinue("Invalid Credentails");
+        }else {
+            Map<String, Object> commonUtilityMap = new HashMap<>();
+            commonUtilityMap.put("commonUtility", commonUtility);
+            employeeController.setData(commonUtilityMap);
+            employeeController.postLoginScreen();
         }
-        try {
-            int result = userDao.insert(user);
-            System.out.println(result);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        showMenu();
     }
+
+
+    public static void initiateInitialMenuAction(int menu) {
+
+        if (commonUtility.isAdmin() && menu == Constant.ADD_NEW_USER) {
+            employeeController.addUser();
+        } else if (commonUtility.isAdmin() && menu == Constant.SEARCH_USER) {
+            employeeController.searchUser();
+        } else if (commonUtility.isAdmin() && menu == Constant.TERMINATE_USER) {
+            employeeController.terminateUser();
+        } else if (commonUtility.isAdmin() && menu == Constant.DELETE_USER) {
+            employeeController.deleteUser();
+        } else if (commonUtility.isUser() && menu == Constant.UPDATE_PROFILE) {
+            employeeController.updateProfile();
+        } else if (commonUtility.isUser() && menu == Constant.SEARCH_USER) {
+            employeeController.searchUser();
+        } else if (menu == Constant.EXIT) {
+            CommonViewUtility.showExitMessageAndExit();
+        } else {
+            showMenu();
+        }
+    }
+
 }

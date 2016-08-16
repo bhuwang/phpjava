@@ -33,7 +33,7 @@ public abstract class DbFactory {
         InputStream input = null;
 
         try {
-            String filePath = System.getProperty("user.dir") + "/src/main/java/com/lftechnology/phpjava/ems/configs/db.properties";
+            String filePath = "src/main/java/com/lftechnology/phpjava/ems/configs/db.properties";
             input = new FileInputStream(filePath);
             properties.load(input);
         } catch (IOException ex) {
@@ -78,14 +78,14 @@ public abstract class DbFactory {
      */
     public static void closeConnection(){
 
-        try {
-
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//
+//            if (connection != null) {
+//                connection.close();
+//            }
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 }

@@ -2,9 +2,11 @@ package com.lftechnology.phpjava.ems.controllers;
 
 import com.lftechnology.phpjava.ems.entities.User;
 import com.lftechnology.phpjava.ems.services.UserService;
-import com.lftechnology.phpjava.ems.utlis.ConsoleWriter;
-import com.lftechnology.phpjava.ems.utlis.PasswordHashGenerator;
-import com.lftechnology.phpjava.ems.utlis.UserInput;
+import com.lftechnology.phpjava.ems.utlis.CommonUtility;
+import com.lftechnology.phpjava.ems.views.LoginView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * LoginController
@@ -12,27 +14,39 @@ import com.lftechnology.phpjava.ems.utlis.UserInput;
  * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
  * @since August, 08 2016
  */
-public class LoginController {
+public class LoginController implements ControllerSignature<Object>{
 
-    private static UserService userService = new UserService();
+    private static LoginView loginView = new LoginView();
+    private UserService userService = new UserService();
+    private CommonUtility commonUtility = new CommonUtility();
+    private static Map<String, Object> postData = new HashMap<>();
+    public void login() {
+        loginView.setAction("login");
+        loginView.render();
 
-    public static void login() {
-        User user = new User();
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Enter your username:");
-        user.setUsername(UserInput.getStringUserInput());
-
-        ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Enter your password:");
-        try {
-            user.setPassword(UserInput.getStringUserInput());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        userService.login(user);
+        User user = (User) this.postData.get("user");
+        this.userService.login(user);
+        this.commonUtility.setUserService(this.userService);
     }
 
-    public static void logout() {
-        userService.logout();
+    public void logout() {
+        loginView.logout();
+    }
+
+    @Override
+    public void setData(Map<String, Object> data) {
+        this.postData = data;
+    }
+
+    @Override
+    public Map<String, Object> getData() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("commonUtility", this.commonUtility);
+        return data;
+    }
+
+    @Override
+    public boolean isPost() {
+        return false;
     }
 }

@@ -18,6 +18,30 @@ public class UserInput {
      */
     public static String getStringUserInput() {
         Scanner scanner = new Scanner(System.in);
+        String userInput = scanUserInput(scanner);
+        return userInput;
+    }
+
+
+    /**
+     * Get int user input from the user
+     *
+     * @return int
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
+    public static int getIntegerUserInput() {
+        Scanner scanner = new Scanner(System.in);
+        String userInput = scanUserInput(scanner);
+        while (!isInteger(userInput)) {
+            ConsoleWriter.writeUserInputRequestMessage("Invalid option. Please enter again");
+            ConsoleWriter.writeBlankLine(5);
+            userInput = scanUserInput(scanner);
+        }
+        int result = Integer.parseInt(userInput);
+        return result;
+    }
+
+    private static String scanUserInput(Scanner scanner) {
         String userInput = "";
         while (true) {
             if (!scanner.hasNextLine()) {
@@ -34,25 +58,12 @@ public class UserInput {
         return userInput;
     }
 
-
-    /**
-     * Get int user input from the user
-     *
-     * @return int
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
-     */
-    public static int getIntegerUserInput() {
-        Scanner scanner = new Scanner(System.in);
-        int userInput = 0;
-        while (true) {
-            if (!scanner.hasNextLine()) {
-                scanner.nextLine();
-            } else {
-                userInput = Integer.parseInt(scanner.nextLine());
-                break;
-            }
+    public static boolean isInteger(String self) {
+        try {
+            Integer.valueOf(self.trim());
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
         }
-        return userInput;
     }
-
 }

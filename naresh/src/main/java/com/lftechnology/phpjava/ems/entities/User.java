@@ -23,8 +23,13 @@ public class User {
         this.isTerminated = isTerminated;
     }
 
+    public User setId(int id) {
+        this.id = id;
+        return this;
+    }
+
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getUsername() {
