@@ -10,8 +10,12 @@ import java.util.Map;
  */
 public interface ViewSignature<T> {
     public void render();
-    public void setAction(String action);
+
     public String getAction();
-    public void setData(Map<String, T> data);
+
+    public void setAction(String action);
+
     public Map<String, T> getData();
+
+    public void setData(Map<String, T> data);
 }

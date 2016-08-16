@@ -12,37 +12,35 @@ import java.util.List;
 public interface DaoSignature<T> {
 
     /**
-     *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @return
      * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
     List<T> findAll() throws SQLException;
 
 
     /**
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param s
      * @return
      * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
     int insert(T t) throws SQLException;
 
     /**
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param s
      * @return
      * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
     int update(T t) throws SQLException;
 
 
     /**
-     *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param s
      * @return
      * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
     int delete(T t) throws SQLException;
 }

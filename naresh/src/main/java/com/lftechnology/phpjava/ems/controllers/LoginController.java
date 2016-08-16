@@ -14,12 +14,13 @@ import java.util.Map;
  * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
  * @since August, 08 2016
  */
-public class LoginController implements ControllerSignature<Object>{
+public class LoginController implements ControllerSignature<Object> {
 
     private static LoginView loginView = new LoginView();
+    private static Map<String, Object> postData = new HashMap<>();
     private UserService userService = new UserService();
     private CommonUtility commonUtility = new CommonUtility();
-    private static Map<String, Object> postData = new HashMap<>();
+
     public void login() {
         loginView.setAction("login");
         loginView.render();
@@ -34,15 +35,15 @@ public class LoginController implements ControllerSignature<Object>{
     }
 
     @Override
-    public void setData(Map<String, Object> data) {
-        this.postData = data;
-    }
-
-    @Override
     public Map<String, Object> getData() {
         Map<String, Object> data = new HashMap<>();
         data.put("commonUtility", this.commonUtility);
         return data;
+    }
+
+    @Override
+    public void setData(Map<String, Object> data) {
+        this.postData = data;
     }
 
     @Override

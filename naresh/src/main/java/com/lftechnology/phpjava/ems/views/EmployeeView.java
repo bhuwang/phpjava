@@ -59,23 +59,23 @@ public class EmployeeView implements ViewSignature<Object> {
     }
 
     @Override
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    @Override
     public String getAction() {
         return this.action;
     }
 
     @Override
-    public void setData(Map<String, Object> data) {
-        commonUtility = (CommonUtility) data.get("commonUtility");
+    public void setAction(String action) {
+        this.action = action;
     }
 
     @Override
     public Map<String, Object> getData() {
         return null;
+    }
+
+    @Override
+    public void setData(Map<String, Object> data) {
+        commonUtility = (CommonUtility) data.get("commonUtility");
     }
 
     public void showAdminMenu() {
@@ -200,7 +200,7 @@ public class EmployeeView implements ViewSignature<Object> {
 
     public void renderEmployeeList(String[] columns, List<Employee> employees) {
         TableGenerator tableGenerator = new TableGenerator(columns);
-        for (Employee employee: employees) {
+        for (Employee employee : employees) {
             tableGenerator.addRow(employee.toArray());
         }
         tableGenerator.renderTable();

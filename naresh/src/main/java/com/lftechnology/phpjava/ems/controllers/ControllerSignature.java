@@ -9,7 +9,9 @@ import java.util.Map;
  * @since August, 16 2016
  */
 public interface ControllerSignature<T> {
-    public void setData(Map<String, T> data);
     public Map<String, T> getData();
+
+    public void setData(Map<String, T> data);
+
     public boolean isPost();
 }

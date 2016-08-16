@@ -9,7 +9,6 @@ import com.lftechnology.phpjava.ems.utlis.PasswordHashGenerator;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -51,7 +50,7 @@ public class EmployeeService {
     public boolean checkAdminUserExists() throws SQLException {
         EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
         List<Employee> employees = employeeDao.findByRole(Role.ADMIN);
-        if (employees.isEmpty()){
+        if (employees.isEmpty()) {
             return false;
         }
         Employee employee = employees.get(0);
@@ -96,7 +95,7 @@ public class EmployeeService {
         EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
         if (employee.getDepartment() != null && !employee.getDepartment().isEmpty()) {
             employees = employeeDao.findByDepartment(employee.getDepartment());
-        } else if (employee.getFullname() != null&& !employee.getFullname().isEmpty()) {
+        } else if (employee.getFullname() != null && !employee.getFullname().isEmpty()) {
             employees = employeeDao.findByFullName(employee.getFullname());
         } else if (employee.getAddress() != null && !employee.getAddress().isEmpty()) {
             employees = employeeDao.findByAddress(employee.getAddress());
@@ -119,7 +118,7 @@ public class EmployeeService {
     private Set<Integer> getUserIds(Employee employee) throws SQLException {
         List<Employee> employees = new ArrayList<>();
         EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
-        if (employee.getFullname() != null&& !employee.getFullname().isEmpty()) {
+        if (employee.getFullname() != null && !employee.getFullname().isEmpty()) {
             employees = employeeDao.findByFullName(employee.getFullname());
         }
         Set<Integer> userIds = employees.stream().map(Employee::getUserId).collect(Collectors.toSet());
@@ -127,7 +126,7 @@ public class EmployeeService {
     }
 
 
-    public String[] getColumns(){
+    public String[] getColumns() {
         String[] columnNames = new String[5];
         columnNames[0] = "User ID";
         columnNames[1] = "Full Name";

@@ -19,6 +19,15 @@ public class UserDaoImpl implements DaoSignature<User> {
     protected Connection conn = DbFactory.getConnection();
     protected PreparedStatement stmt = null;
 
+    public static String preparePlaceHolders(int length) {
+        return String.join(",", Collections.nCopies(length, "?"));
+    }
+
+    public static void setValues(PreparedStatement preparedStatement, Object... values) throws SQLException {
+        for (int i = 0; i < values.length; i++) {
+            preparedStatement.setObject(i + 1, values[i]);
+        }
+    }
 
     @Override
     public List<User> findAll() throws SQLException {
@@ -55,7 +64,7 @@ public class UserDaoImpl implements DaoSignature<User> {
             value = user.getPassword();
             sql.append(" password = ?");
         }
-        if(update){
+        if (update) {
             sql.append(" where id = ?");
             stmt = conn.prepareStatement(sql.toString());
             stmt.setString(1, value);
@@ -86,15 +95,6 @@ public class UserDaoImpl implements DaoSignature<User> {
         return stmt.executeUpdate();
     }
 
-    public static String preparePlaceHolders(int length) {
-        return String.join(",", Collections.nCopies(length, "?"));
-    }
-
-    public static void setValues(PreparedStatement preparedStatement, Object... values) throws SQLException {
-        for (int i = 0; i < values.length; i++) {
-            preparedStatement.setObject(i + 1, values[i]);
-        }
-    }
     /**
      * Find the employee by role
      *

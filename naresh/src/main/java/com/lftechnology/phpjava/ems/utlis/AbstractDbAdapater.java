@@ -11,7 +11,7 @@ import java.util.Map;
 public abstract class AbstractDbAdapater {
     protected String query = "";
 
-    protected AbstractDbAdapater where(Map<String, String> condition){
+    protected AbstractDbAdapater where(Map<String, String> condition) {
         condition.entrySet();
         return this;
     }

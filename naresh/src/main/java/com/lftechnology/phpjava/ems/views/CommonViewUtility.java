@@ -25,7 +25,7 @@ public class CommonViewUtility {
         ConsoleWriter.writeUserInputRequestMessage("Enter your credentails to log into the system");
     }
 
-    public static void showExitMessageAndExit(){
+    public static void showExitMessageAndExit() {
         ConsoleWriter.writeBlankLine(100);
         ConsoleWriter.writeUserInputRequestMessage("Bye, Felicia");
         ConsoleWriter.writeBlankLine(5);
@@ -43,17 +43,17 @@ public class CommonViewUtility {
         ConsoleWriter.writeUserInputRequestMessage("2. No");
         if (UserInput.getIntegerUserInput() == 1) {
             Router.showMenu();
-        }else{
+        } else {
             showExitMessageAndExit();
         }
     }
 
-    public static void pressKeyToContinue(){
+    public static void pressKeyToContinue() {
         ConsoleWriter.writeBlankLine(3);
         ConsoleWriter.writeUserInputRequestMessage("Press 1 to continue or any other number to exit");
         if (UserInput.getIntegerUserInput() == 1) {
             Router.showMenu();
-        }else{
+        } else {
             showExitMessageAndExit();
         }
     }

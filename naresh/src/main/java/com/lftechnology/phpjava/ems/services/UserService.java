@@ -16,12 +16,10 @@ import java.util.List;
  */
 public class UserService {
 
+    UserDaoImpl userDao = new UserDaoImpl();
     private boolean isLoggedIn = false;
     private String loggedInUserRole = "";
     private int userId;
-
-    UserDaoImpl userDao = new UserDaoImpl();
-
 
     public void login(User user) {
         try {

@@ -3,7 +3,6 @@ package com.lftechnology.phpjava.ems.utlis;
 import com.lftechnology.phpjava.ems.constants.Constant;
 import com.lftechnology.phpjava.ems.controllers.EmployeeController;
 import com.lftechnology.phpjava.ems.controllers.LoginController;
-import com.lftechnology.phpjava.ems.entities.Employee;
 import com.lftechnology.phpjava.ems.services.EmployeeService;
 import com.lftechnology.phpjava.ems.views.CommonViewUtility;
 
@@ -71,7 +70,7 @@ public class Router {
         showLoginMenuAndLoginToSystem();
         if (!commonUtility.isLoggedIn()) {
             CommonViewUtility.showMessageAndContinue("Invalid Credentails");
-        }else {
+        } else {
             Map<String, Object> commonUtilityMap = new HashMap<>();
             commonUtilityMap.put("commonUtility", commonUtility);
             employeeController.setData(commonUtilityMap);

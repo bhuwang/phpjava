@@ -13,13 +13,13 @@ public abstract class AbstractBaseView implements ViewSignature {
     public abstract void render();
 
     @Override
-    public void setAction(String action) {
-        this.action = action;
+    public String getAction() {
+        return this.action;
     }
 
     @Override
-    public String getAction() {
-        return this.action;
+    public void setAction(String action) {
+        this.action = action;
     }
 
 }

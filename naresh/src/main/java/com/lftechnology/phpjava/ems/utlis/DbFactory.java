@@ -24,9 +24,9 @@ public abstract class DbFactory {
     /**
      * load database configuration for properties file
      *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @return
      * @throws IOException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
     private static void loadProperties() {
 
@@ -52,8 +52,8 @@ public abstract class DbFactory {
     /**
      * get database connection
      *
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @return
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
     public static Connection getConnection() {
         loadProperties();
@@ -76,7 +76,7 @@ public abstract class DbFactory {
     /**
      *
      */
-    public static void closeConnection(){
+    public static void closeConnection() {
 
 //        try {
 //

@@ -34,17 +34,13 @@ public class LoginView implements ViewSignature<Object> {
     }
 
     @Override
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    @Override
     public String getAction() {
         return this.action;
     }
 
     @Override
-    public void setData(Map<String, Object> data) {
+    public void setAction(String action) {
+        this.action = action;
     }
 
     @Override
@@ -52,6 +48,10 @@ public class LoginView implements ViewSignature<Object> {
         Map<String, Object> data = new HashMap<>();
         data.put("commonUtility", this.commonUtility);
         return data;
+    }
+
+    @Override
+    public void setData(Map<String, Object> data) {
     }
 
     public void login() {

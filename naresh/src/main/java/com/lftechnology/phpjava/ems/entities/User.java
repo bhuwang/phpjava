@@ -23,13 +23,13 @@ public class User {
         this.isTerminated = isTerminated;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public User setId(int id) {
         this.id = id;
         return this;
-    }
-
-    public int getId() {
-        return this.id;
     }
 
     public String getUsername() {

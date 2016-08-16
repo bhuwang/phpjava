@@ -16,7 +16,7 @@ public class Employee extends User {
     protected Role role;
     protected int userId;
 
-    public Employee(){
+    public Employee() {
         super();
     }
 
@@ -76,13 +76,13 @@ public class Employee extends User {
         return this;
     }
 
-    public String[] toArray(){
+    public String[] toArray() {
         String[] emp = new String[5];
         emp[0] = String.valueOf(this.getUserId());
         emp[1] = this.getFullname();
         emp[2] = this.getAddress();
         emp[3] = this.getRole().toString();
         emp[4] = this.getDepartment();
-        return  emp;
+        return emp;
     }
 }

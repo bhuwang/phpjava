@@ -75,9 +75,9 @@ public class EmployeeController implements ControllerSignature<Object> {
     }
 
     public void terminateUser() {
-        if (this.isPost()){
+        if (this.isPost()) {
             Employee employee = (Employee) postData.get("employee");
-            int result= 0;
+            int result = 0;
             try {
                 result = employeeService.terminateUser(employee);
             } catch (SQLException e) {
@@ -87,7 +87,7 @@ public class EmployeeController implements ControllerSignature<Object> {
             postData.clear();
             this.isPost = false;
             CommonViewUtility.showMessageAndContinue(message);
-        }else {
+        } else {
             employeeView.setAction(Constant.TERMINATE_USER_ACTION);
             employeeView.render();
         }
@@ -95,7 +95,7 @@ public class EmployeeController implements ControllerSignature<Object> {
     }
 
     public void deleteUser() {
-        if (this.isPost()){
+        if (this.isPost()) {
             Employee employee = (Employee) postData.get("employee");
             int result = 0;
             try {
@@ -107,7 +107,7 @@ public class EmployeeController implements ControllerSignature<Object> {
             postData.clear();
             this.isPost = false;
             CommonViewUtility.showMessageAndContinue(message);
-        }else {
+        } else {
             employeeView.setAction(Constant.DELETE_USER_ACTION);
             employeeView.render();
         }
@@ -138,13 +138,13 @@ public class EmployeeController implements ControllerSignature<Object> {
     }
 
     @Override
-    public void setData(Map<String, Object> data) {
-        postData = data;
+    public Map<String, Object> getData() {
+        return null;
     }
 
     @Override
-    public Map<String, Object> getData() {
-        return null;
+    public void setData(Map<String, Object> data) {
+        postData = data;
     }
 
     @Override
