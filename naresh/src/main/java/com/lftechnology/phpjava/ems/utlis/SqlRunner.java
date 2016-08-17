@@ -27,8 +27,8 @@ public class SqlRunner {
     private List<String> sql = new ArrayList<>();
 
     /**
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @return
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
     public List getSqlFileList() {
         File folder = new File(basePath);
@@ -45,10 +45,10 @@ public class SqlRunner {
     }
 
     /**
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @return
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    public List<String> getSql() {
+    public List<String> getSql() throws IOException {
         this.files = this.getSqlFileList();
         List<String> executedFilesList = this.getExecutedFileList();
         for (String file : files) {
@@ -61,81 +61,64 @@ public class SqlRunner {
     }
 
     /**
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param file
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    private void getFileContent(String file) {
-        try {
-            try (BufferedReader br = new BufferedReader(new FileReader(basePath + file))) {
-                String line = br.readLine();
-                while (line != null) {
-                    this.sql.add(line);
-                    line = br.readLine();
-                }
+    private void getFileContent(String file) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(basePath + file))) {
+            String line = br.readLine();
+            while (line != null) {
+                this.sql.add(line);
+                line = br.readLine();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     /**
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @return
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    private List<String> getExecutedFileList() {
+    private List<String> getExecutedFileList() throws IOException {
         List<String> executedFiles = new ArrayList<>();
-        try {
-            this.checkAndCreateExecutedListFile();
-            try (BufferedReader br = new BufferedReader(new FileReader(basePath + "executedFiles.txt"))) {
-                String line = br.readLine();
-                while (line != null) {
-                    executedFiles.add(line);
-                    line = br.readLine();
-                }
+        this.checkAndCreateExecutedListFile();
+        try (BufferedReader br = new BufferedReader(new FileReader(basePath + "executedFiles.txt"))) {
+            String line = br.readLine();
+            while (line != null) {
+                executedFiles.add(line);
+                line = br.readLine();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return executedFiles;
     }
 
     /**
+     * @throws SQLException
+     * @throws IOException
      * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    public void executeSql() {
+    public void executeSql() throws SQLException, IOException {
         this.getSql();
         Connection connection = DbFactory.getConnection();
-        try {
-            if (!this.sql.isEmpty()) {
-                for (String query : this.sql) {
-                    if (!query.isEmpty()) {
-                        PreparedStatement stmt = connection.prepareStatement(query.toString());
-                        stmt.execute();
-                    }
-                }
-                Path excludedFileList = Paths.get(basePath + "executedFiles.txt");
-                try {
-                    Files.write(excludedFileList, this.files, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (!this.sql.isEmpty()) {
+            for (String query : this.sql) {
+                if (!query.isEmpty()) {
+                    PreparedStatement stmt = connection.prepareStatement(query.toString());
+                    stmt.execute();
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            Path excludedFileList = Paths.get(basePath + "executedFiles.txt");
+            Files.write(excludedFileList, this.files, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
         }
     }
 
     /**
      * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-    private void checkAndCreateExecutedListFile() {
+    private void checkAndCreateExecutedListFile() throws IOException {
         File f = new File(basePath + "executedFiles.txt");
-        try {
-            if (!f.exists()) {
-                f.createNewFile();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!f.exists()) {
+            f.createNewFile();
         }
+
     }
 }
