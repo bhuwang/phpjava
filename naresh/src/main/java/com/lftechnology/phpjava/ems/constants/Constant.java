@@ -76,4 +76,8 @@ public class Constant {
     public static final String ADDRESS = "Address";
     public static final String ROLE_USER_TYPE = "Role(User Type)";
     public static final String DEPARTMENT = "Department";
+    public static final String EMPLOYEE_ADDED_SUCCESSFULLY = "Employee added successfully";
+    public static final String UNABLE_TO_ADD_EMPLOYEE = "Unable to add employee";
+    public static final String DATA_UPDATED_SUCCESSFULLY = "Data updated successfully.";
+    public static final String UNABLE_TO_UPDATE_PROFILE = "Unable to update profile.";
 }

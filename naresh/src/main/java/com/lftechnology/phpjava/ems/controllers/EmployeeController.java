@@ -38,7 +38,7 @@ public class EmployeeController implements ControllerSignature<Object> {
      */
     public void addUser() {
         if (this.isPost) {
-            Employee employee = (Employee) postData.get("employee");
+            Employee employee = (Employee) postData.get(Constant.EMPLOYEE);
             int result = 0;
             try {
                 result = employeeService.addEmployee(employee);
@@ -47,9 +47,9 @@ public class EmployeeController implements ControllerSignature<Object> {
             }
             String message;
             if (result > 0) {
-                message = "Employee added successfully";
+                message = Constant.EMPLOYEE_ADDED_SUCCESSFULLY;
             } else {
-                message = "Unable to add employee";
+                message = Constant.UNABLE_TO_ADD_EMPLOYEE;
             }
             postData.clear();
             this.isPost = false;
@@ -66,7 +66,7 @@ public class EmployeeController implements ControllerSignature<Object> {
      */
     public void searchUser() {
         if (this.isPost) {
-            Employee employee = (Employee) postData.get("employee");
+            Employee employee = (Employee) postData.get(Constant.EMPLOYEE);
             List<Employee> result = new ArrayList<>();
             try {
                 result = employeeService.searchEmployee(employee);
@@ -88,7 +88,7 @@ public class EmployeeController implements ControllerSignature<Object> {
      */
     public void terminateUser() {
         if (this.isPost()) {
-            Employee employee = (Employee) postData.get("employee");
+            Employee employee = (Employee) postData.get(Constant.EMPLOYEE);
             int result = 0;
             try {
                 result = employeeService.terminateUser(employee);
@@ -111,7 +111,7 @@ public class EmployeeController implements ControllerSignature<Object> {
      */
     public void deleteUser() {
         if (this.isPost()) {
-            Employee employee = (Employee) postData.get("employee");
+            Employee employee = (Employee) postData.get(Constant.EMPLOYEE);
             int result = 0;
             try {
                 result = employeeService.deleteUser(employee);
@@ -133,7 +133,7 @@ public class EmployeeController implements ControllerSignature<Object> {
      */
     public void updateProfile() {
         if (this.isPost) {
-            Employee employee = (Employee) postData.get("employee");
+            Employee employee = (Employee) postData.get(Constant.EMPLOYEE);
             int result = 0;
             try {
                 result = employeeService.updateEmployee(employee);
@@ -144,9 +144,9 @@ public class EmployeeController implements ControllerSignature<Object> {
             postData.clear();
             String message;
             if (result > 0) {
-                message = "Data updated successfully.";
+                message = Constant.DATA_UPDATED_SUCCESSFULLY;
             } else {
-                message = "Unable to update profile.";
+                message = Constant.UNABLE_TO_UPDATE_PROFILE;
             }
             CommonViewUtility.showMessageAndContinue(message);
         } else {
