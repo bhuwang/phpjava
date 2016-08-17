@@ -5,7 +5,6 @@ import com.lftechnology.phpjava.ems.dao.UserDaoImpl;
 import com.lftechnology.phpjava.ems.entities.Employee;
 import com.lftechnology.phpjava.ems.entities.User;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -21,34 +20,51 @@ public class UserService {
     private String loggedInUserRole = "";
     private int userId;
 
-    public void login(User user) {
-        try {
-            User result = userDao.findByUsernamePassword(user);
-            if (user.getUsername().equals(result.getUsername())) {
-                this.isLoggedIn = true;
-                this.userId = result.getId();
-                EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
-                List<Employee> employees = employeeDao.findByUserId(this.userId);
-                Employee employee = employees.get(0);
-                this.loggedInUserRole = employee.getRole().toString();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param user
+     * @throws Exception
+     */
+    public void login(User user) throws Exception {
+        User result = userDao.findByUsernamePassword(user);
+        if (user.getUsername().equals(result.getUsername())) {
+            this.isLoggedIn = true;
+            this.userId = result.getId();
+            EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
+            List<Employee> employees = employeeDao.findByUserId(this.userId);
+            Employee employee = employees.get(0);
+            this.loggedInUserRole = employee.getRole().toString();
         }
+
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     public boolean isUserLoggedIn() {
         return this.isLoggedIn;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     public String getLoggedInUserRole() {
         return this.loggedInUserRole;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     public int getUserId() {
         return this.userId;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void logout() {
         this.isLoggedIn = false;
     }

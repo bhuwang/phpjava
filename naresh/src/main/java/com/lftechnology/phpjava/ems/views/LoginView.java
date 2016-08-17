@@ -1,5 +1,6 @@
 package com.lftechnology.phpjava.ems.views;
 
+import com.lftechnology.phpjava.ems.constants.Constant;
 import com.lftechnology.phpjava.ems.controllers.LoginController;
 import com.lftechnology.phpjava.ems.entities.User;
 import com.lftechnology.phpjava.ems.services.UserService;
@@ -23,9 +24,12 @@ public class LoginView implements ViewSignature<Object> {
     private UserService userService = new UserService();
     private String action;
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     @Override
     public void render() {
-        if (this.getAction().equals("login")) {
+        if (this.getAction().equals(Constant.LOGIN)) {
             this.login();
         } else {
             this.logout();
@@ -33,41 +37,63 @@ public class LoginView implements ViewSignature<Object> {
 
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     @Override
     public String getAction() {
         return this.action;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param action
+     */
     @Override
     public void setAction(String action) {
         this.action = action;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     @Override
     public Map<String, Object> getData() {
         Map<String, Object> data = new HashMap<>();
-        data.put("commonUtility", this.commonUtility);
+        data.put(Constant.COMMON_UTILITY, this.commonUtility);
         return data;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param data
+     */
     @Override
     public void setData(Map<String, Object> data) {
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void login() {
         Map<String, Object> postData = new HashMap<>();
 
         ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Enter your username:");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.ENTER_YOUR_USERNAME_TO_LOGIN);
         this.user.setUsername(UserInput.getStringUserInput());
 
-        ConsoleWriter.writeUserInputRequestMessage("Enter your password:");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.ENTER_YOUR_PASSWORD_TO_LOGIN);
         this.user.setPassword(UserInput.getStringUserInput());
 
-        postData.put("user", this.user);
+        postData.put(Constant.USER, this.user);
         this.loginController.setData(postData);
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void logout() {
         this.userService.logout();
     }

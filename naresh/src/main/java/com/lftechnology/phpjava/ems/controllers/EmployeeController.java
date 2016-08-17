@@ -24,12 +24,18 @@ public class EmployeeController implements ControllerSignature<Object> {
     private static Map<String, Object> postData = new HashMap<>();
     private boolean isPost = false;
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void postLoginScreen() {
         employeeView.setAction(Constant.POST_LOGIN_ACTION);
         employeeView.setData(postData);
         employeeView.render();
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void addUser() {
         if (this.isPost) {
             Employee employee = (Employee) postData.get("employee");
@@ -55,6 +61,9 @@ public class EmployeeController implements ControllerSignature<Object> {
 
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void searchUser() {
         if (this.isPost) {
             Employee employee = (Employee) postData.get("employee");
@@ -74,6 +83,9 @@ public class EmployeeController implements ControllerSignature<Object> {
         }
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void terminateUser() {
         if (this.isPost()) {
             Employee employee = (Employee) postData.get("employee");
@@ -94,6 +106,9 @@ public class EmployeeController implements ControllerSignature<Object> {
 
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void deleteUser() {
         if (this.isPost()) {
             Employee employee = (Employee) postData.get("employee");
@@ -113,6 +128,9 @@ public class EmployeeController implements ControllerSignature<Object> {
         }
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void updateProfile() {
         if (this.isPost) {
             Employee employee = (Employee) postData.get("employee");
@@ -137,21 +155,36 @@ public class EmployeeController implements ControllerSignature<Object> {
         }
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     @Override
     public Map<String, Object> getData() {
         return null;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param data
+     */
     @Override
     public void setData(Map<String, Object> data) {
         postData = data;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     @Override
     public boolean isPost() {
         return this.isPost;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void makeCurrentRequestPost() {
         this.isPost = true;
     }

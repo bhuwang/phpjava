@@ -58,27 +58,36 @@ public class Router {
         CommonViewUtility.showWelcomeScreen();
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public static void showLoginMenuAndLoginToSystem() {
         if (!commonUtility.getUserService().isUserLoggedIn()) {
             showWelcomeScreen();
             loginController.login();
-            commonUtility = (CommonUtility) loginController.getData().get("commonUtility");
+            commonUtility = (CommonUtility) loginController.getData().get(Constant.COMMON_UTILITY);
         }
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public static void showMenu() {
         showLoginMenuAndLoginToSystem();
         if (!commonUtility.isLoggedIn()) {
-            CommonViewUtility.showMessageAndContinue("Invalid Credentails");
+            CommonViewUtility.showMessageAndContinue(Constant.INVALID_CREDENTAILS);
         } else {
             Map<String, Object> commonUtilityMap = new HashMap<>();
-            commonUtilityMap.put("commonUtility", commonUtility);
+            commonUtilityMap.put(Constant.COMMON_UTILITY, commonUtility);
             employeeController.setData(commonUtilityMap);
             employeeController.postLoginScreen();
         }
     }
 
-
+    /**
+     * @param menu
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public static void initiateInitialMenuAction(int menu) {
 
         if (commonUtility.isAdmin() && menu == Constant.ADD_NEW_USER) {

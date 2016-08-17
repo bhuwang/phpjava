@@ -1,5 +1,6 @@
 package com.lftechnology.phpjava.ems.views;
 
+import com.lftechnology.phpjava.ems.constants.Constant;
 import com.lftechnology.phpjava.ems.utlis.ConsoleWriter;
 import com.lftechnology.phpjava.ems.utlis.Router;
 import com.lftechnology.phpjava.ems.utlis.UserInput;
@@ -19,28 +20,38 @@ public class CommonViewUtility {
      */
     public static void showWelcomeScreen() {
         ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Welcome To Employee Management System !!!");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.WELCOME_TO_EMPLOYEE_MANAGEMENT_SYSTEM);
 
         ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Enter your credentails to log into the system");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.ENTER_YOUR_CREDENTAILS_TO_LOG_INTO_THE_SYSTEM);
     }
 
+
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public static void showExitMessageAndExit() {
         ConsoleWriter.writeBlankLine(100);
-        ConsoleWriter.writeUserInputRequestMessage("Bye, Felicia");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.BYE_MESSAGE);
         ConsoleWriter.writeBlankLine(5);
         System.exit(0);
     }
 
+
+    /**
+     *
+     * @param message
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public static void showMessageAndContinue(String message) {
         ConsoleWriter.writeBlankLine(100);
         ConsoleWriter.writeUserInputRequestMessage(message);
         ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Do you want to continue?");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.DO_YOU_WANT_TO_CONTINUE);
         ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("1. Yes");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.YES);
         ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("2. No");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.NO);
         if (UserInput.getIntegerUserInput() == 1) {
             Router.showMenu();
         } else {
@@ -48,9 +59,12 @@ public class CommonViewUtility {
         }
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public static void pressKeyToContinue() {
         ConsoleWriter.writeBlankLine(3);
-        ConsoleWriter.writeUserInputRequestMessage("Press 1 to continue or any other number to exit");
+        ConsoleWriter.writeUserInputRequestMessage(Constant.PRESS_1_TO_CONTINUE_OR_ANY_OTHER_NUMBER_TO_EXIT);
         if (UserInput.getIntegerUserInput() == 1) {
             Router.showMenu();
         } else {

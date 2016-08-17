@@ -1,5 +1,6 @@
 package com.lftechnology.phpjava.ems.services;
 
+import com.lftechnology.phpjava.ems.constants.Constant;
 import com.lftechnology.phpjava.ems.dao.EmployeeDaoImpl;
 import com.lftechnology.phpjava.ems.dao.UserDaoImpl;
 import com.lftechnology.phpjava.ems.entities.Employee;
@@ -128,11 +129,11 @@ public class EmployeeService {
 
     public String[] getColumns() {
         String[] columnNames = new String[5];
-        columnNames[0] = "User ID";
-        columnNames[1] = "Full Name";
-        columnNames[2] = "Address";
-        columnNames[3] = "Role(User Type)";
-        columnNames[4] = "Department";
+        columnNames[0] = Constant.USER_ID;
+        columnNames[1] = Constant.FULL_NAME;
+        columnNames[2] = Constant.ADDRESS;
+        columnNames[3] = Constant.ROLE_USER_TYPE;
+        columnNames[4] = Constant.DEPARTMENT;
         return columnNames;
     }
 }

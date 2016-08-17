@@ -19,21 +19,43 @@ public class UserDaoImpl implements DaoSignature<User> {
     protected Connection conn = DbFactory.getConnection();
     protected PreparedStatement stmt = null;
 
+    /**
+     * @param length
+     * @return
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public static String preparePlaceHolders(int length) {
         return String.join(",", Collections.nCopies(length, "?"));
     }
 
+    /**
+     * @param preparedStatement
+     * @param values
+     * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public static void setValues(PreparedStatement preparedStatement, Object... values) throws SQLException {
         for (int i = 0; i < values.length; i++) {
             preparedStatement.setObject(i + 1, values[i]);
         }
     }
 
+    /**
+     * @return
+     * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     @Override
     public List<User> findAll() throws SQLException {
         return null;
     }
 
+    /**
+     * @param user
+     * @return
+     * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     @Override
     public int insert(User user) throws SQLException {
         int lastInsertedId = 0;
@@ -49,6 +71,12 @@ public class UserDaoImpl implements DaoSignature<User> {
         return lastInsertedId;
     }
 
+    /**
+     * @param user
+     * @return
+     * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     @Override
     public int update(User user) throws SQLException {
         StringBuilder sql = new StringBuilder();
@@ -74,11 +102,23 @@ public class UserDaoImpl implements DaoSignature<User> {
         return 0;
     }
 
+    /**
+     * @param user
+     * @return
+     * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     @Override
     public int delete(User user) throws SQLException {
         return 0;
     }
 
+    /**
+     * @param userIds
+     * @return
+     * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public int delete(Set<Integer> userIds) throws SQLException {
         String sql = "DELETE FROM user WHERE id IN(%s)";
         String sqlNew = String.format(sql, this.preparePlaceHolders(userIds.size()));
@@ -87,6 +127,12 @@ public class UserDaoImpl implements DaoSignature<User> {
         return stmt.executeUpdate();
     }
 
+    /**
+     * @param userIds
+     * @return
+     * @throws SQLException
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public int terminateUsers(Set<Integer> userIds) throws SQLException {
         String sql = "UPDATE user SET is_terminated = 1 WHERE id IN(%s)";
         String sqlNew = String.format(sql, this.preparePlaceHolders(userIds.size()));
@@ -100,72 +146,60 @@ public class UserDaoImpl implements DaoSignature<User> {
      *
      * @param
      * @return User
-     * @throws SQLException
+     * @throws Exception
      * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      */
-
-    public User findByUsernamePassword(User user) throws SQLException {
+    public User findByUsernamePassword(User user) throws Exception {
 
         String sql = "SELECT * FROM user WHERE is_terminated = 0 AND username = ?";
         String[] bindValues = {user.getUsername()};
 
         User result = findBy(sql, bindValues);
-        try {
-            if (result.getPassword() == null) {
-                result = new User();
-            } else if (!PasswordHashGenerator.check(user.getPassword(), result.getPassword())) {
-                result = new User();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (result.getPassword() == null) {
+            result = new User();
+        } else if (!PasswordHashGenerator.check(user.getPassword(), result.getPassword())) {
+            result = new User();
         }
         return result;
     }
 
 
     /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param sql
      * @param bindValues
-     * @return User
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     * @throws SQLException
      */
-    private User findBy(String sql, String[] bindValues) {
+    private User findBy(String sql, String[] bindValues) throws SQLException {
         User user = new User();
-        try {
-            stmt = conn.prepareStatement(sql);
-            int counter = 1;
-            for (String bindvalue : bindValues) {
-                stmt.setString(counter, bindvalue);
-                counter++;
-            }
-            ResultSet resultSet = stmt.executeQuery();
-            user = setUserData(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DbFactory.closeConnection();
+        stmt = conn.prepareStatement(sql);
+        int counter = 1;
+        for (String bindvalue : bindValues) {
+            stmt.setString(counter, bindvalue);
+            counter++;
         }
+        ResultSet resultSet = stmt.executeQuery();
+        user = setUserData(resultSet);
+
         return user;
     }
 
     /**
      * set user data from the resultset
      *
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
      * @param resultSet
      * @return User
-     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @throws SQLException
      */
-    private User setUserData(ResultSet resultSet) {
+    private User setUserData(ResultSet resultSet) throws SQLException {
         User user = new User();
-        try {
-            if (resultSet.next()) {
-                user.setUsername(resultSet.getString("username"))
-                        .setPassword(resultSet.getString("password"))
-                        .setTerminated(resultSet.getBoolean("is_terminated"))
-                        .setId(resultSet.getInt("id"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (resultSet.next()) {
+            user.setUsername(resultSet.getString("username"))
+                    .setPassword(resultSet.getString("password"))
+                    .setTerminated(resultSet.getBoolean("is_terminated"))
+                    .setId(resultSet.getInt("id"));
         }
         return user;
     }

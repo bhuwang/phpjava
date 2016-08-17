@@ -7,12 +7,6 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-/**
- * PasswordHashGenerator
- *
- * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
- * @since August, 09 2016
- */
 public class PasswordHashGenerator {
     // The higher the number of iterations the more
     // expensive computing the hash is for us and

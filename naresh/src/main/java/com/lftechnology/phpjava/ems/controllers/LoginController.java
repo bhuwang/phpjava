@@ -1,5 +1,6 @@
 package com.lftechnology.phpjava.ems.controllers;
 
+import com.lftechnology.phpjava.ems.constants.Constant;
 import com.lftechnology.phpjava.ems.entities.User;
 import com.lftechnology.phpjava.ems.services.UserService;
 import com.lftechnology.phpjava.ems.utlis.CommonUtility;
@@ -22,11 +23,15 @@ public class LoginController implements ControllerSignature<Object> {
     private CommonUtility commonUtility = new CommonUtility();
 
     public void login() {
-        loginView.setAction("login");
+        loginView.setAction(Constant.LOGIN);
         loginView.render();
 
-        User user = (User) this.postData.get("user");
-        this.userService.login(user);
+        User user = (User) this.postData.get(Constant.USER);
+        try {
+            this.userService.login(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.commonUtility.setUserService(this.userService);
     }
 
@@ -37,7 +42,7 @@ public class LoginController implements ControllerSignature<Object> {
     @Override
     public Map<String, Object> getData() {
         Map<String, Object> data = new HashMap<>();
-        data.put("commonUtility", this.commonUtility);
+        data.put(Constant.COMMON_UTILITY, this.commonUtility);
         return data;
     }
 

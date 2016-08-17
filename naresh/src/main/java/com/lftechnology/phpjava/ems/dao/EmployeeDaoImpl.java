@@ -22,6 +22,11 @@ public class EmployeeDaoImpl implements DaoSignature<Employee> {
     protected Connection conn = DbFactory.getConnection();
     protected PreparedStatement stmt = null;
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Employee> findAll() throws SQLException {
         List<Employee> employees = new ArrayList<>();
@@ -42,6 +47,12 @@ public class EmployeeDaoImpl implements DaoSignature<Employee> {
         return employees;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param employee
+     * @return
+     * @throws SQLException
+     */
     @Override
     public int insert(Employee employee) throws SQLException {
         String sql = "INSERT INTO employee (fullname, address, department, role, user_id) VALUES ( ?, ? , ?, ?,?);";
@@ -54,6 +65,12 @@ public class EmployeeDaoImpl implements DaoSignature<Employee> {
         return stmt.executeUpdate();
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param employee
+     * @return
+     * @throws SQLException
+     */
     @Override
     public int update(Employee employee) throws SQLException {
         StringBuilder sql = new StringBuilder();
@@ -83,6 +100,12 @@ public class EmployeeDaoImpl implements DaoSignature<Employee> {
         return 0;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param employee
+     * @return
+     * @throws SQLException
+     */
     @Override
     public int delete(Employee employee) throws SQLException {
         return 0;

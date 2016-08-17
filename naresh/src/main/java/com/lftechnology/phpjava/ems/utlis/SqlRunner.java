@@ -26,6 +26,10 @@ public class SqlRunner {
     private List<String> files;
     private List<String> sql = new ArrayList<>();
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     public List getSqlFileList() {
         File folder = new File(basePath);
         File[] listOfFiles = folder.listFiles();
@@ -40,6 +44,10 @@ public class SqlRunner {
         return sqlFiles;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     public List<String> getSql() {
         this.files = this.getSqlFileList();
         List<String> executedFilesList = this.getExecutedFileList();
@@ -52,6 +60,10 @@ public class SqlRunner {
         return this.sql;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param file
+     */
     private void getFileContent(String file) {
         try {
             try (BufferedReader br = new BufferedReader(new FileReader(basePath + file))) {
@@ -66,6 +78,10 @@ public class SqlRunner {
         }
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @return
+     */
     private List<String> getExecutedFileList() {
         List<String> executedFiles = new ArrayList<>();
         try {
@@ -83,7 +99,9 @@ public class SqlRunner {
         return executedFiles;
     }
 
-
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     public void executeSql() {
         this.getSql();
         Connection connection = DbFactory.getConnection();
@@ -104,11 +122,12 @@ public class SqlRunner {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            DbFactory.closeConnection();
         }
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     */
     private void checkAndCreateExecutedListFile() {
         File f = new File(basePath + "executedFiles.txt");
         try {

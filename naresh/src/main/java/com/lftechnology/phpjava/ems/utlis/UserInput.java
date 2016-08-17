@@ -1,5 +1,7 @@
 package com.lftechnology.phpjava.ems.utlis;
 
+import com.lftechnology.phpjava.ems.constants.Constant;
+
 import java.util.Scanner;
 
 /**
@@ -33,7 +35,7 @@ public class UserInput {
         Scanner scanner = new Scanner(System.in);
         String userInput = scanUserInput(scanner);
         while (!isInteger(userInput)) {
-            ConsoleWriter.writeUserInputRequestMessage("Invalid option. Please enter again");
+            ConsoleWriter.writeUserInputRequestMessage(Constant.INVALID_OPTION_PLEASE_ENTER_AGAIN);
             ConsoleWriter.writeBlankLine(5);
             userInput = scanUserInput(scanner);
         }
@@ -41,6 +43,11 @@ public class UserInput {
         return result;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param scanner
+     * @return
+     */
     private static String scanUserInput(Scanner scanner) {
         String userInput = "";
         while (true) {
@@ -58,6 +65,11 @@ public class UserInput {
         return userInput;
     }
 
+    /**
+     * @author Naresh Maharjan <nareshmaharjan@lftechnology.com>
+     * @param self
+     * @return
+     */
     public static boolean isInteger(String self) {
         try {
             Integer.valueOf(self.trim());
