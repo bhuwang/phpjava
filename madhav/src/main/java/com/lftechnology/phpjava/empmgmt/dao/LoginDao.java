@@ -3,6 +3,7 @@ package main.java.com.lftechnology.phpjava.empmgmt.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import main.java.com.lftechnology.phpjava.empmgmt.service.IOService;
 
@@ -30,6 +31,8 @@ public class LoginDao {
                 return null;
             }
 
+        } catch (SQLException e) {
+            IOService.output(e.getMessage());
         } catch (Exception e) {
             IOService.output(e.getMessage());
         }
