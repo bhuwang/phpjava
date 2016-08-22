@@ -11,7 +11,7 @@ public class EmpDao {
     private Connection conn;
     public EmpDao() {
         DBConnection dbconn = new DBConnection();
-        conn = dbconn.getConnection();
+        this.conn = dbconn.getConnection();
     }
     
     public ResultSet listEmployees() {
@@ -19,7 +19,7 @@ public class EmpDao {
         ResultSet rs = null;
         String sql = "SELECT * FROM employee WHERE is_deleted=0";
         try {
-            pst = conn.prepareStatement(sql);
+            pst = this.conn.prepareStatement(sql);
             rs = pst.executeQuery();
         } catch (SQLException e) {
             IOService.output(e.getMessage());

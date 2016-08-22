@@ -2,6 +2,7 @@ package main.java.com.lftechnology.phpjava.empmgmt.controller;
 
 import java.sql.ResultSet;
 
+import main.java.com.lftechnology.phpjava.empmgmt.service.UserService;
 import main.java.com.lftechnology.phpjava.empmgmt.service.EmpService;
 import main.java.com.lftechnology.phpjava.empmgmt.service.IOService;
 import main.java.com.lftechnology.phpjava.empmgmt.service.LoginService;
@@ -13,6 +14,7 @@ import main.java.com.lftechnology.phpjava.empmgmt.view.MenuView;
 
 public class EmployeeController {
     public static void main(String[] args) {
+        UserService.checkDefaultUser();
         Session.role = LoginController.Login();
         MenuController.showMenu();
     }

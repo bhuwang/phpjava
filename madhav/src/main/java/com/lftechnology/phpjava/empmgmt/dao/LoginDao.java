@@ -11,14 +11,14 @@ public class LoginDao {
     private Connection conn;
     public LoginDao() {
         DBConnection dbconn = new DBConnection();
-        conn = dbconn.getConnection();
+        this.conn = dbconn.getConnection();
     }
     
     public String getUserRole(String username, String password) {
         PreparedStatement pst = null;
         String sql = "SELECT * FROM user WHERE username=? AND password=?";
         try {
-            pst = conn.prepareStatement(sql);
+            pst = this.conn.prepareStatement(sql);
 
             pst.setString(1, username);
             pst.setString(2, password);
