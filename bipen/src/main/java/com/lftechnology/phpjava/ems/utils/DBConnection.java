@@ -1,4 +1,4 @@
-package com.lftechnology.phpjava.ems.dao;
+package com.lftechnology.phpjava.ems.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class DBConnection {
      * @throws Exception
      * @author Bipen Chhetri
      */
-    public Connection getConnection() {
+    public static Connection getConnection() {
 
         Connection conn = null;
         Properties properties = getProperties();
@@ -35,7 +35,7 @@ public class DBConnection {
             String password = properties.getProperty("password");
             conn = DriverManager.getConnection(database, username, password);
         } catch (Exception e) {
-            System.out.println("Couldn't connect to database =" + e.getMessage());
+            ConsoleWriter.setErrorMessageToConsole("Couldn't connect to database =" + e.getMessage());
         }
 
         return conn;
@@ -59,7 +59,7 @@ public class DBConnection {
             io.close();
 
         } catch (IOException e) {
-            System.out.println("IO Exception = " + e.getMessage());
+            ConsoleWriter.setErrorMessageToConsole("IO Exception = " + e.getMessage());
         }
         return properties;
     }

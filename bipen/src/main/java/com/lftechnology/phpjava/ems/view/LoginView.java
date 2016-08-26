@@ -3,6 +3,7 @@ package com.lftechnology.phpjava.ems.view;
 import java.util.Scanner;
 
 import com.lftechnology.phpjava.ems.controller.LoginController;
+import com.lftechnology.phpjava.ems.utils.ConsoleWriter;
 
 /**
  * Login view
@@ -18,9 +19,9 @@ public class LoginView {
      * @author Bipen Chhetri
      */
     public void loginMenu() {
-        System.out.println("Welcome to Emplyment Management System.");
-        System.out.println("Please choose the following options:");
-        System.out.println("1. Login 2.Any key to exit.");
+        ConsoleWriter.setMessageToConsole("Welcome to Emplyment Management System.");
+        ConsoleWriter.setMessageToConsole("Please choose the following options:");
+        ConsoleWriter.setMessageToConsole("1. Login 2.Any key to exit.");
 
         validateUserInput();
 
@@ -30,32 +31,33 @@ public class LoginView {
      * Validates the user input.
      */
     public void validateUserInput() {
-        Scanner userInput = new Scanner(System.in);
-        if (userInput.hasNextInt()) {
-            Integer choosenInput = userInput.nextInt();
-            loginProcess(choosenInput);
-
+        Integer i = ConsoleWriter.getUserInput();
+        if (i > 0) {
+            this.loginProcess(i);
         } else {
-            System.err.println("Please choose from the options only!");
-            loginMenu();
+            this.loginMenu();
         }
-        userInput.close();
     }
 
     public void loginProcess(Integer input) {
-        Scanner userInputs = new Scanner(System.in);
         if (input.equals(1)) {
-            System.out.println("Enter Username:");
+            LoginController.createDefaultAdminUser();
+            Scanner userInputs = new Scanner(System.in);
+            ConsoleWriter.setMessageToConsole("Enter Username:");
             String userName = userInputs.nextLine();
 
-            System.out.println("Enter Password");
+            ConsoleWriter.setMessageToConsole("Enter Password");
             String password = userInputs.nextLine();
-
             LoginController.login(userName, password);
 
-        } else {
-            System.out.println("Exiting System....Done");
+        } else if (input.equals(2)) {
+            ConsoleWriter.setErrorMessageToConsole("Exiting System....Done");
+            ConsoleWriter.setPrintBlankLines(1);
             System.exit(0);
+        } else {
+            ConsoleWriter.setErrorMessageToConsole("Improper option. Please choose again.");
+            ConsoleWriter.setPrintBlankLines(2);
+            this.loginMenu();
         }
     }
 

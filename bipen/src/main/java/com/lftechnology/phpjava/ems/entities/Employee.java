@@ -1,13 +1,11 @@
 package com.lftechnology.phpjava.ems.entities;
 
-import com.lftechnology.phpjava.ems.enums.Role;
-
 public class Employee extends User {
     protected String fullName;
     protected String department;
     protected String address;
 
-    protected Role role;
+    protected String role;
 
     /**
      * @return the fullName
@@ -55,14 +53,18 @@ public class Employee extends User {
     }
 
     /**
-     * 
+     * @return
      */
-    public Role setRole(Role role) {
-
+    public String getRole() {
+        return role;
     }
 
-    public Role getRole() {
-
+    /**
+     * @param role
+     * @return
+     */
+    public void setRole(String role) {
+        this.role = role;
     }
 
 }
