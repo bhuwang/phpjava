@@ -11,7 +11,7 @@ public class PrintDayInWord {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter day in number.");
 		int dayInNumber = scanner.nextInt();
-		PrintDayInWord.displayDayInWord(dayInNumber);
+		displayDayInWord(dayInNumber);
 		scanner.close();
 	}
 	

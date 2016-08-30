@@ -8,8 +8,8 @@ public class FullNameAndSalutation {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter full name with saluation. Eg : Er Sita Prajapati");
 		String input = scanner.nextLine();
-		FullNameAndSalutation.displayFullNameAndSalutation(input);
 		scanner.close();
+		displayFullNameAndSalutation(input);
 	}
 
 	public static void displayFullNameAndSalutation(String fullNameWithSalutation) {

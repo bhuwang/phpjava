@@ -13,14 +13,14 @@ import com.lftechnology.assignment.smallestMultiple.SmallestMultiple;
 public class Menu {
 
 	public static void main(String[] args) {
-		Menu.menuList();
+		menuList();
 	}
 
 	public static void menuList() {
 		Scanner input = new Scanner(System.in);
-		Menu.list();
+		list();
 		int pressedOption = input.nextInt();
-		Menu.filter(pressedOption);
+		filter(pressedOption);
 		input.close();
 	}
 
@@ -51,8 +51,8 @@ public class Menu {
 			System.exit(0);
 			break;
 		}
-		
-		Menu.menuList();
+
+		menuList();
 	}
 
 	public static void list() {
